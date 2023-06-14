@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/messagesFragment">
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.jvega.feel.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
+        android:id="@+id/messagesFragment"
+        android:name="com.jvega.feel.MessagesFragment"
+        android:label="Messages"
+        tools:layout="@layout/fragment_chat" />
+
+
+
+</navigation>
