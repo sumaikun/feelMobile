@@ -21,6 +21,7 @@ import com.jvega.feel.network.RetrofitClient
 import com.jvega.feel.util.DialogHelper
 import com.jvega.feel.util.TokenManager
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -89,17 +90,25 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun checkToken(){
         val apiService = RetrofitClient.apiService
-        val response = apiService.validateToken(TokenManager.getToken().toString())
-        if (response.isSuccessful) {
-            val validationResponse = response.body()
-            val isValid = validationResponse?.valid ?: false
-            if (isValid) {
-                Log.d("MainActivity","Token is valid")
+        try {
+            val response = apiService.validateToken(TokenManager.getToken().toString())
+            if (response.isSuccessful) {
+                val validationResponse = response.body()
+                val isValid = validationResponse?.valid ?: false
+                if (isValid) {
+                    Log.d("MainActivity", "Token is valid")
+                } else {
+                    DialogHelper.showAlertDialog(this, "Session Over", "Please renew your session.")
+                }
             } else {
-                DialogHelper.showAlertDialog(this, "Session Over", "Please renew your session.")
+                DialogHelper.showAlertDialog(this, "Server error", "Please try to reconnect.")
             }
-        } else {
-            DialogHelper.showAlertDialog(this, "Server error", "Please try to reconnect.")
+        } catch (e: IOException) {
+            // Handle network error
+            DialogHelper.showAlertDialog(this, "Network error", "Please check your internet connection.")
+        } catch (e: Exception) {
+            // Handle other types of errors
+            DialogHelper.showAlertDialog(this, "Error", "Looks like the server is unreachable.")
         }
     }
 }

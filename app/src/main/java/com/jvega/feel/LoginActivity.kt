@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
         backgroundImage = findViewById(R.id.backgroundImage)
 
         Glide.with(this)
-            .load("https://source.unsplash.com/1600x900/?psychology")
+            .load("https://picsum.photos/1280/720")
             .centerCrop()
             .into(backgroundImage)
 
